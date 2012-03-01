@@ -18,6 +18,10 @@
  * Adds user target for role
  */
 
+/**
+ * @todo Please document this function.
+ * @see http://drupal.org/node/1354
+ */
 function feeds_node_helper_feeds_node_processor_targets_alter(&$targets, $content_type) {
   $targets['uuid_book_parent'] = array(
     'name' => t('UUID Book Parent'),
