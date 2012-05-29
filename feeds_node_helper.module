@@ -92,3 +92,23 @@ function feeds_node_helper_ctools_plugin_directory($module, $plugin) {
     return 'plugins';
   }
 }
+
+/**
+ * Implements hook_form_alter().
+ */
+function feeds_node_helper_form_alter(&$form, &$form_state, $form_id) {
+  // only apply to feeds import form
+  if ($form_id == 'feeds_import_form') {
+    // clone current GET environment
+    $args = $_GET;
+    // iterate through and scrub input
+    foreach ($args as $key => $val) {
+      $args[$key] = filter_xss(check_plain($val));
+    }
+    // append current arguments to the form
+    $form['feeds']['FeedsHTTPFetcher']['feeds_node_helper_args'] = array(
+      '#type' => 'hidden',
+      '#value' => serialize($args),
+    );
+  }
+}
