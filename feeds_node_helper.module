@@ -22,23 +22,23 @@
  * @todo Please document this function.
  * @see http://drupal.org/node/1354
  */
-function feeds_node_helper_feeds_node_processor_targets_alter(&$targets, $content_type) {
-  $targets['uuid_book_parent'] = array(
+function feeds_node_helper_feeds_processor_targets_alter(&$target, $type, $bundle) {
+  $target['uuid_book_parent'] = array(
     'name' => t('UUID Book Parent'),
     'description' => t('Create a book parent relationship based on UUID'),
     'callback' => 'feeds_node_helper_feeds_set_uuid_book_parent_target',
   );
-  $targets['type'] = array(
+  $target['type'] = array(
     'name' => t('Node Type'),
     'description' => t('Map value to a node type'),
     'callback' => 'feeds_node_helper_feeds_set_type_target',
   );
-  $targets['uuid'] = array(
+  $target['uuid'] = array(
     'name' => t('UUID'),
     'description' => t('Map value to UUID field'),
     'callback' => 'feeds_node_helper_feeds_set_uuid_target',
   );
-  $targets['book_weight'] = array(
+  $target['book_weight'] = array(
     'name' => t('Book Weight'),
     'description' => t('Map value to book weight'),
     'callback' => 'feeds_node_helper_feeds_set_weight_target',
