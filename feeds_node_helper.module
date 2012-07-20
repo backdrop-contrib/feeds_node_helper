@@ -43,45 +43,57 @@ function feeds_node_helper_feeds_processor_targets_alter(&$target, $type, $bundl
     'description' => t('Map value to book weight'),
     'callback' => 'feeds_node_helper_feeds_set_weight_target',
   );
+  $target['uuid_book_bid'] = array(
+    'name' => t('Book: bid'),
+    'description' => t('Book root id target'),
+    'callback' => 'feeds_node_helper_feeds_set_uuid_book_bid_target',
+  );
 }
 
 /**
  * Set the node uuid from an external system.
  */
-function feeds_node_helper_feeds_set_uuid_target($node, $target, $value) {
-  $node->uuid = $value;
-  return $node;
+function feeds_node_helper_feeds_set_uuid_target($source, $entity, $target, $value) {
+  $entity->uuid = $value;
 }
 
 /**
  * Set the node type.
  */
-function feeds_node_helper_feeds_set_type_target($node, $target, $value) {
-  $node->type = $value;
-  return $node;
+function feeds_node_helper_feeds_set_type_target($source, $entity, $target, $value) {
+  $entity->type = $value;
 }
 
 /**
  * Set the book weight.
  */
-function feeds_node_helper_feeds_set_weight_target($node, $target, $value) {
+function feeds_node_helper_feeds_set_weight_target($source, $entity, $target, $value) {
   // set the weight based on what it was previously
-  $node->book['weight'] = $value;
-  return $node;
+  $entity->book['weight'] = $value;
+}
+
+/**
+ * Set the book to the group context
+ */
+function feeds_node_helper_feeds_set_uuid_book_bid_target($source, $entity, $target, $value) {
+  // load the parent from the UUID, it should have been created prior to creation
+  $pentity = entity_property_id_to_uuid($target, 'node', 'tnid');
+  if ($pentity) {
+    // associate the parent correctly now that we've loaded the node
+    $entity->book['bid'] = $pentity->book['bid'];
+  }
 }
 
 /**
  * Set the book parent, this assumes a UUID look up.
  */
-function feeds_node_helper_feeds_set_uuid_book_parent_target($node, $target, $value) {
+function feeds_node_helper_feeds_set_uuid_book_parent_target($source, $entity, $target, $value) {
   // load the parent from the UUID, it should have been created prior to creation
-  $parentnode = node_get_by_uuid($value);
-  if (!$parentnode) {
-    return $node;
+  $pentity = entity_property_id_to_uuid($target, 'node', 'tnid');
+  if ($pentity) {
+    // associate the parent correctly now that we've loaded the node
+    $entity->book['plid'] = $pentity->book['mlid'];
   }
-  // associate the parent correctly now that we've loaded the node
-  $node->book['plid'] = $parentnode->book['mlid'];
-  return $node;
 }
 
 /**
