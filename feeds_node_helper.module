@@ -45,7 +45,7 @@ function feeds_node_helper_feeds_processor_targets_alter(&$target, $type, $bundl
   );
   $target['uuid_book_bid'] = array(
     'name' => t('Book: bid'),
-    'description' => t('Book root id target'),
+    'description' => t('Book root id target, makes a new one if item has no parent defined'),
     'callback' => 'feeds_node_helper_feeds_set_uuid_book_bid_target',
   );
 }
@@ -61,6 +61,10 @@ function feeds_node_helper_feeds_set_uuid_target($source, $entity, $target, $val
  * Set the node type.
  */
 function feeds_node_helper_feeds_set_type_target($source, $entity, $target, $value) {
+  // default to page if nothing is provided
+  if ($value == '') {
+    $value = 'page';
+  }
   $entity->type = $value;
 }
 
@@ -69,6 +73,9 @@ function feeds_node_helper_feeds_set_type_target($source, $entity, $target, $val
  */
 function feeds_node_helper_feeds_set_weight_target($source, $entity, $target, $value) {
   // set the weight based on what it was previously
+  if ($value == '') {
+    $value = 0;
+  }
   $entity->book['weight'] = $value;
 }
 
@@ -77,10 +84,20 @@ function feeds_node_helper_feeds_set_weight_target($source, $entity, $target, $v
  */
 function feeds_node_helper_feeds_set_uuid_book_bid_target($source, $entity, $target, $value) {
   // load the parent from the UUID, it should have been created prior to creation
-  $pentity = entity_property_id_to_uuid($target, 'node', 'tnid');
-  if ($pentity) {
-    // associate the parent correctly now that we've loaded the node
-    $entity->book['bid'] = $pentity->book['bid'];
+  if ($value == '') {
+    $entity->book['bid'] = 'new';
+  }
+  else {
+    // load the parent from the UUID, it should have been created prior to creation
+    $pnids = entity_get_id_by_uuid('node', array($value));
+    if ($pnids[$value]) {
+      // load the full entity (node)
+      $node = node_load($pnids[$value]);
+      // associate the parent correctly now that we've loaded the node
+      $entity->book['bid'] = $node->book['bid'];
+      $entity->book['plid'] = $node->book['mlid'];
+      $entity->book['menu_name'] = $node->book['menu_name'];
+    }
   }
 }
 
@@ -89,10 +106,14 @@ function feeds_node_helper_feeds_set_uuid_book_bid_target($source, $entity, $tar
  */
 function feeds_node_helper_feeds_set_uuid_book_parent_target($source, $entity, $target, $value) {
   // load the parent from the UUID, it should have been created prior to creation
-  $pentity = entity_property_id_to_uuid($target, 'node', 'tnid');
-  if ($pentity) {
+  $pnids = entity_get_id_by_uuid('node', array($value));
+  if ($pnids[$value]) {
+    // load the full entity (node)
+    $node = node_load($pnids[$value]);
     // associate the parent correctly now that we've loaded the node
-    $entity->book['plid'] = $pentity->book['mlid'];
+    $entity->book['bid'] = $node->book['bid'];
+    $entity->book['plid'] = $node->book['mlid'];
+    $entity->book['menu_name'] = $node->book['menu_name'];
   }
 }
 
