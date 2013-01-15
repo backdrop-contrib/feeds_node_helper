@@ -28,6 +28,10 @@ function feeds_node_maps_form($importer, $element_key, $settings) {
  * Helper function to process the value conversion
  */
 function feeds_node_maps_callback($result, $item_key, $element_key, &$field, $settings) {
-  global $user;
-  $field = $user->uid;
+  // account for drush / command line interfaces
+  if (!drupal_is_cli()) {
+    global $user;
+    $field = $user->uid;	
+  }
+  // CLI comes up as anonymous so ignore field tamper
 }
