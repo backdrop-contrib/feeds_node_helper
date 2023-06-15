@@ -1,0 +1,133 @@
+{
+  "_config_name": "feeds.feeds_importer.book_import",
+  "id": "book_import",
+  "disabled": false,
+  "config": {
+    "name": "Book outline Import",
+    "description": "Import content from existing drupal sites",
+    "fetcher": {
+      "plugin_key": "FeedsFileFetcher",
+      "config": {
+        "direct": 0,
+        "allowed_extensions": "xml",
+        "directory": "private://feeds",
+        "allowed_schemes": [
+          "public",
+          "private"
+        ]
+      }
+    },
+    "parser": {
+      "plugin_key": "FeedsXPathParserXML",
+      "config": {
+        "sources": {
+          "xpathparser:1": "body",
+          "xpathparser:2": "title",
+          "xpathparser:3": "uid",
+          "xpathparser:5": "uuid",
+          "xpathparser:7": "uuid",
+          "xpathparser:8": "parent",
+          "xpathparser:9": "weight",
+          "xpathparser:10": "parent"
+        },
+        "rawXML": {
+          "xpathparser:1": 0,
+          "xpathparser:2": 0,
+          "xpathparser:3": 0,
+          "xpathparser:5": 0,
+          "xpathparser:7": 0,
+          "xpathparser:8": 0,
+          "xpathparser:9": 0,
+          "xpathparser:10": 0
+        },
+        "context": "node",
+        "exp": {
+          "errors": 0,
+          "debug": {
+            "context": 0,
+            "xpathparser:1": 0,
+            "xpathparser:2": 0,
+            "xpathparser:3": 0,
+            "xpathparser:5": 0,
+            "xpathparser:7": 0,
+            "xpathparser:8": 0,
+            "xpathparser:9": 0,
+            "xpathparser:10": 0
+          }
+        },
+        "allow_override": 0
+      }
+    },
+    "processor": {
+      "plugin_key": "FeedsNodeProcessor",
+      "config": {
+        "input_format": "filtered_html",
+        "update_existing": "2",
+        "expire": "-1",
+        "mappings": [
+          {
+            "source": "xpathparser:1",
+            "target": "body",
+            "unique": false
+          },
+          {
+            "source": "xpathparser:2",
+            "target": "title",
+            "unique": false
+          },
+          {
+            "source": "xpathparser:3",
+            "target": "uid",
+            "unique": false,
+            "tampers": {
+              "userid": {
+                "plugin_id": "userid",
+                "settings": [],
+                "description": "Current User ID",
+                "id": "userid",
+                "weight": 0,
+                "disabled": false
+              }
+            }
+          },
+          {
+            "source": "xpathparser:5",
+            "target": "guid",
+            "unique": 1
+          },
+          {
+            "source": "xpathparser:7",
+            "target": "uuid",
+            "unique": 0
+          },
+          {
+            "source": "xpathparser:8",
+            "target": "uuid_book_bid",
+            "unique": false
+          },
+          {
+            "source": "xpathparser:9",
+            "target": "book_weight",
+            "unique": false
+          },
+          {
+            "source": "xpathparser:10",
+            "target": "uuid_book_parent",
+            "unique": false
+          }
+        ],
+        "author": "1",
+        "authorize": 0,
+        "update_non_existent": "skip",
+        "skip_hash_check": 0,
+        "bundle": "page"
+      }
+    },
+    "content_type": "",
+    "update": 0,
+    "import_period": "-1",
+    "expire_period": 3600,
+    "import_on_create": 1,
+    "process_in_background": 0
+  }
+}

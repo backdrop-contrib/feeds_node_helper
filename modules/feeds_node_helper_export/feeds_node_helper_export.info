@@ -1,0 +1,9 @@
+name = Book Outline Export Example
+description = View that allows for exporting of book outlines
+backdrop = 1.x
+type = module
+package = Feeds
+dependencies[] = book
+dependencies[] = uuid
+dependencies[] = views
+dependencies[] = views_data_export

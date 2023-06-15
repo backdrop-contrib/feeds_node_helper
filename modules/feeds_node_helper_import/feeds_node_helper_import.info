@@ -1,0 +1,10 @@
+name = Book Outline Import Example
+description = Example: Import Book outlines from other Backdrop sites
+backdrop = 1.x
+type = module
+package = Feeds
+project = feeds_node_helper_import
+dependencies[] = feeds
+dependencies[] = feeds_node_helper
+dependencies[] = feeds_tamper
+dependencies[] = feeds_xpathparser

@@ -1,9 +1,10 @@
-; $Id: feeds_node_helper.info
 name = Feeds Node Helper
-description = Provides some additionally useful importers for feeds
+description = Provides some useful importers for feeds: books, UUIDs and so on.
 package = Feeds
-core = 7.x
+backdrop = 1.x
+type = module
 dependencies[] = feeds
 dependencies[] = uuid
+dependencies[] = feeds_tamper
 project = "feeds_node_helper"
-
+tags[] = Feeds

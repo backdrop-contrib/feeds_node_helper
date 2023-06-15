@@ -1,0 +1,21 @@
+<?php
+/**
+ * @file
+ * Install, update, and uninstall functions for the feeds_node_helper_import
+ * module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function feeds_node_helper_import_install() {
+  // Allow content to fire before the UUID project in case it has to repair an
+  // error.
+  db_update('system')
+  ->fields(array(
+    'weight' =>  -10,
+  ))
+  ->condition('name', 'feeds_node_helper_import')
+  ->condition('type', 'module')
+  ->execute();
+}

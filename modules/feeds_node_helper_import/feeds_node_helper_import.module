@@ -1,7 +1,5 @@
 <?php
 
-include_once 'feeds_node_helper_import.features.inc';
-
 /**
  * Implements hook_node_update().
  */

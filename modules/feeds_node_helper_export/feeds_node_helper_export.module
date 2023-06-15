@@ -1,10 +1,8 @@
 <?php
 /**
  * @file
- * Code for the Book Outline Export feature.
+ * Code for the Book Outline Export example.
  */
-
-include_once 'feeds_node_helper_export.features.inc';
 
 /**
  * Implements hook_field_formatter_info().
