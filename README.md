@@ -21,37 +21,42 @@ This also adds two Transformations to Feeds Tampers:
   a million different uses of this, here's a video showing how this tamper can
   be used: <https://www.youtube.com/watch?v=V20UTH8yo5E>.
 
-It also comes packaged with a Feature that illustrates how to import a book
-outline using this module. 1.4 will come packaged with a view that exports in the correct format to help ease migrations or at least show an example of how to do this.
+It also comes packaged with examples that illustrates how to import a book
+outline and export book outlines using Views Data Export.
 
 Requirements
 ------------
 
-* Job Scheduler <https://github.com/backdrop-contrib/job_scheduler>
-* PHP safe mode is not supported, depending on your Feeds Importer configuration safe mode may cause no problems though.
+* Feeds
+* Feeds Tamper
+* UUID
 
 Installation
 ------------
 
-* Install Feeds, Feeds Admin UI.
-* To get started quick, install one or all of the following Feature modules: Feeds News, Feeds Import, Feeds Fast News (more info below).
-* Make sure cron is correctly configured <https://backdropcms.org/user-guide/setting-cron>
-* Go to `import/` to import data.
+* Install this module using the official Backdrop CMS instructions at
+  <https://backdropcms.org/guide/modules>
+* To get started quick, install one or all of the following example modules:
+  Feeds Node Helper Import, Feeds Node Helper Export.
+* Go to `admin/structure/feeds` to further configure importers.
 
 License
 -------
 
-This project is GPL v2 software. See the LICENSE.txt file in this directory for complete text.
+This project is GPL v2 software. See the LICENSE.txt file in this directory for
+complete text.
 
 Maintainers
 -----------
 
+* [Herb v/d Dool](https://github.com/herbdool/)
 * Seeking maintainers.
 
 Credits
 -------
 
+Ported to Backdrop by [Herb v/d Dool](https://github.com/herbdool/).
+
 Drupal version currently maintained by:
 
 * [Bryan Ollendyke](https://www.drupal.org/u/btopro)
-
